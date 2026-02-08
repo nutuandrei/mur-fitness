@@ -7,7 +7,7 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: black;
+    background: ghostwhite; 
     color: #fff;
 }
 
@@ -29,7 +29,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 40px;
+    padding: 5px 80px;
 }
 
 .logo-wrapper {
@@ -39,14 +39,14 @@ body {
 }
 
 .logo {
-    height: 80px;             /* sau ce dimensiune vrei */
+    height: 70px;             /* sau ce dimensiune vrei */
     width: auto;
     display: block;
 }
 
 .logo-text {
-    color: white;
-    font-size: 25px;
+    color: mediumpurple;
+    font-size: 22px;
     font-weight: 900;
     white-space: nowrap;
 }
@@ -60,7 +60,7 @@ body {
 }
 
 .nav-links a {
-    color: #fff;
+    color: mediumpurple;
     text-decoration: none;
     font-size: 25px;
     font-weight: bold;
@@ -70,13 +70,13 @@ body {
 .menu {
     font-size: 28px;
     cursor: pointer;
+    color: mediumpurple;
 }
 
 /* HERO wrapper (full width, FĂRĂ background) */
 .hero {
     padding-top: 0px; /* sub navbar */
     padding-bottom: 20px;
-    background: black; /* fundal general pagină */
 }
 
 /* HERO real (centrat, max 1296px, cu background) */
@@ -85,12 +85,14 @@ body {
     margin: 0 auto;
     min-height: 700px;
 
-    background: url("hero.jpg") center / cover no-repeat;
+    background: url("tema1.jpg") center / cover no-repeat;
     border-radius: 10px;
 
     display: flex;
-    align-items: end;
-    padding: 35px 60px;
+    align-items: flex-end;     /* jos */
+    justify-content: flex-end; /* dreapta */
+
+    padding: 15px 40px;
 }
 
 /* TEXT */
@@ -99,8 +101,14 @@ body {
 }
 
 .hero h1 {
-    font-size: clamp(28px, 5vw, 56px);
+    font-size: clamp(5px, 15vw, 15px);
     line-height: 1.1;
+    text-align: end;
+    text-shadow:
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px  2px 0 #000,
+            2px  2px 0 #000;
 }
 
 .hero h1 span {
@@ -110,8 +118,13 @@ body {
 .hero p {
     margin: 20px 0;
     opacity: 0.85;
-    font-size: clamp(28px, 5vw, 56px);
+    font-size: clamp(5px, 15vw, 58px);
     font-weight: bold;
+    text-shadow:
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px  2px 0 #000,
+            2px  2px 0 #000;
 }
 
 .btn {
@@ -137,7 +150,7 @@ body {
 }
 
 .feature {
-    background: rebeccapurple;
+    background: #222;
     padding: 5px 5px 25px 5px;
     text-align: center;
     font-size: 40px;
@@ -217,13 +230,103 @@ body {
     display: block;
 }
 
+.gallery-grid div {
+    background: orange;
+    border-radius: 15px;
+    display: block;
+    font-size: 18px;
+    font-weight: normal;
+}
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+
+    padding: 15px 0px; /* ← IMPORTANT */
+}
+
+.slider-inner {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease;
+
+    align-items: flex-start; /* ← CHEIA */
+}
+
+.card {
+    background: orange;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 0 0 calc(33.333% - 13.33px); /* 3 carduri desktop */
+    box-sizing: border-box;
+    overflow: hidden; /* ← taie doar ce e în card, nu sliderul */
+}
+
+/* Imagine + titlu pe aceeasi linie */
+.card-header {
+    display: flex;
+    align-items: center;      /* aliniere verticală imagine + titlu */
+    justify-content: center;  /* centru orizontal în card */
+    gap: 10px;                /* spațiu între imagine și titlu */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.card-header img {
+    width: 90px;
+    height: 90px;
+    border-radius: 20%;
+    object-fit: cover;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;        /* ajustează după preferințe */
+    font-weight: bold;
+}
+
+/* Butoane navigare */
+.arrow {
+    position: absolute;
+    top: 70px;          /* ← AICI */
+    transform: none;     /* ← scoatem translateY */
+
+    width: 44px;
+    height: 44px;
+
+    background: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: ghostwhite;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.arrow-left {
+    left: 10px;
+}
+
+.arrow-right {
+    right: 10px;
+}
+
 /* MOBILE MENU */
-@media (max-width: 991px) {.nav-links {
+@media (max-width: 991px) {
+    .nav-links {
     position: fixed;
     top: 70px;       /* de unde începe meniul */
     right: 0;        /* apare în dreapta */
     width: 200px;    /* lățimea meniului */
-    background: #000;
+    background: ghostwhite;
     display: flex;
     flex-direction: column;
     align-items: center; /* text centrat */
@@ -248,6 +351,17 @@ body {
         transform: translateX(0);
     }
 
+    .card {
+        flex: 0 0 85%;   /* puțin mai îngust */
+    }
+    
+    .slider-container {
+        padding: 15px 20px; /* ← IMPORTANT */
+    }
+    
+    .slider-inner {
+        justify-content: flex-start; /* primul card la stânga */
+    }
 }
 
 /* DESKTOP */
@@ -261,7 +375,11 @@ body {
     }
 
     .hero h1 {
-        font-size: 64px;
+        font-size: clamp(30px, 5vw, 35px);
+    }
+    
+    .hero p {
+        font-size: clamp(24px, 5vw, 58px);
     }
 
     .features-inner {

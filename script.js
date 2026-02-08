@@ -31,3 +31,34 @@ if (features.length > 0) {
         }
     });
 }
+
+
+const sliderInner = document.querySelector('.slider-inner');
+const leftArrow = document.querySelector('.arrow-left');
+const rightArrow = document.querySelector('.arrow-right');
+
+let index = 0;
+
+// functie pentru a calcula cate carduri sunt vizibile
+function visibleCards() {
+    return window.innerWidth <= 768 ? 1 : 3;
+}
+
+function updateSlider() {
+    const cardWidth = sliderInner.querySelector('.card').offsetWidth + 20; // gap=20
+    sliderInner.style.transform = `translateX(-${index * cardWidth}px)`;
+}
+
+rightArrow.addEventListener('click', () => {
+    const maxIndex = sliderInner.children.length - visibleCards();
+    if(index < maxIndex) index++;
+    updateSlider();
+});
+
+leftArrow.addEventListener('click', () => {
+    if(index > 0) index--;
+    updateSlider();
+});
+
+// update la resize
+window.addEventListener('resize', updateSlider);
