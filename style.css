@@ -181,7 +181,7 @@ body {
     color: white;
     text-decoration: none;
 
-    padding: 6px 16px;
+    padding: 10px 26px;
     border-radius: 7px;
 
     font-weight: bold;
@@ -218,28 +218,36 @@ body {
 }
 
 /* MOBILE MENU */
-@media (max-width: 991px) {
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 70%;
-        height: 100vh;
-        background: #000;
-        flex-direction: column;
-        justify-content: center;
-        gap: 30px;
-        transition: right 0.3s ease;
-        z-index: 20;
-    }
+@media (max-width: 991px) {.nav-links {
+    position: fixed;
+    top: 70px;       /* de unde începe meniul */
+    right: 0;        /* apare în dreapta */
+    width: 200px;    /* lățimea meniului */
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* text centrat */
+    gap: 20px;
+    padding-top: 10px;  /* padding sus */
+    padding-bottom: 20px; /* opțional, ca să fie mai aerisit */
+    border-radius: 10px; /* colțuri rotunjite */
 
+    /* ASCUNS */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px); /* animare din dreapta spre stânga */
+
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+    /* ACTIV */
     .nav-links.active {
-        right: 0;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(0);
     }
 
-    .nav-links a {
-        font-size: 22px;
-    }
 }
 
 /* DESKTOP */
