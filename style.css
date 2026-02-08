@@ -15,7 +15,7 @@ body {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 0;
 }
 
 /* NAVBAR */
@@ -39,7 +39,7 @@ body {
 }
 
 .logo {
-    height: 100px;             /* sau ce dimensiune vrei */
+    height: 80px;             /* sau ce dimensiune vrei */
     width: auto;
     display: block;
 }
@@ -125,13 +125,15 @@ body {
 
 /* FEATURES */
 .features {
-    padding: 0 0;
+    padding: 0 90px;
 }
 
 .features-inner {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 .feature {
@@ -140,6 +142,19 @@ body {
     text-align: center;
     font-size: 40px;
     border-radius: 10px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.4s ease, transform 1.4s ease;
+}
+
+.feature.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
 }
 
 .feature img {
@@ -247,7 +262,7 @@ body {
     }
 
     .feature {
-        width: 1400px;
+        /*width: 1400px;*/
     }
 
     .gallery-grid {
