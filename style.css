@@ -594,6 +594,10 @@ body {
                 -1px  1px 0 #000,
                 1px  1px 0 #000;
     }
+    
+    .card {
+        padding: 10px;
+    }
 
     .card-header img {
         width: 70px;

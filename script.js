@@ -74,6 +74,32 @@ document.querySelectorAll(".read-more").forEach(btn => {
     });
 });
 
+let startX = 0;
+let isDragging = false;
+
+sliderInner.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+sliderInner.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+
+    const maxIndex = sliderInner.children.length - visibleCards();
+
+    if (diff > 50) { // swipe dreapta → slide anterior
+        if(index > 0) index--;
+        updateSlider();
+    } else if (diff < -50) { // swipe stanga → slide urmator
+        if(index < maxIndex) index++;
+        updateSlider();
+    }
+});
+
 window.addEventListener("DOMContentLoaded", () => {
     const track = document.querySelector(".gallery-track");
     const allImages = Array.from(track.querySelectorAll("img"));
