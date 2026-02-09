@@ -62,3 +62,14 @@ leftArrow.addEventListener('click', () => {
 
 // update la resize
 window.addEventListener('resize', updateSlider);
+
+document.querySelectorAll(".read-more").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        card.classList.toggle("expanded");
+
+        btn.textContent = card.classList.contains("expanded")
+            ? "Minimize"
+            : "Read more";
+    });
+});

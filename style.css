@@ -139,7 +139,7 @@ body {
 
 /* FEATURES */
 .features {
-    padding: 15px 90px;
+    padding: 25px 90px;
 }
 
 .features-inner {
@@ -241,11 +241,11 @@ body {
 .slider-container {
     position: relative;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1430px;
     margin: 0 auto;
     overflow: hidden;
 
-    padding: 15px 0px; /* ← IMPORTANT */
+    padding: 12px 20px; /* ← IMPORTANT */
 }
 
 .slider-inner {
@@ -261,9 +261,34 @@ body {
     color: white;
     border-radius: 10px;
     padding: 20px;
-    flex: 0 0 calc(33.333% - 13.33px); /* 3 carduri desktop */
+    flex: 0 0 calc(33.333% - 13.33px);
     box-sizing: border-box;
-    overflow: hidden; /* ← taie doar ce e în card, nu sliderul */
+    overflow: hidden;
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.75);
+    transition: all 0.3s ease;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 6; /* ← 4 randuri */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 17px;
+}
+
+.card.expanded .card-text {
+    -webkit-line-clamp: unset;
+}
+
+.read-more {
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
 }
 
 /* Imagine + titlu pe aceeasi linie */
