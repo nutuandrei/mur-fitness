@@ -39,14 +39,14 @@ body {
 }
 
 .logo {
-    height: 70px;             /* sau ce dimensiune vrei */
+    height: 60px;             /* sau ce dimensiune vrei */
     width: auto;
     display: block;
 }
 
 .logo-text {
     color: mediumpurple;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     white-space: nowrap;
 }
@@ -75,8 +75,9 @@ body {
 
 /* HERO wrapper (full width, FĂRĂ background) */
 .hero {
-    padding-top: 0px; /* sub navbar */
-    padding-bottom: 20px;
+    padding-top: 10px; /* sub navbar */
+    padding-bottom: 10px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
 }
 
 /* HERO real (centrat, max 1296px, cu background) */
@@ -92,7 +93,7 @@ body {
     align-items: flex-end;     /* jos */
     justify-content: flex-end; /* dreapta */
 
-    padding: 15px 40px;
+    padding: 20px 25px;
 }
 
 /* TEXT */
@@ -138,7 +139,7 @@ body {
 
 /* FEATURES */
 .features {
-    padding: 0 90px;
+    padding: 15px 90px;
 }
 
 .features-inner {
