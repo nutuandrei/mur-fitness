@@ -222,12 +222,12 @@ body {
     padding-top: 10px;
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* MOBILE DEFAULT */
-    gap: 20px;
+    gap: 10px;
 }
 
 .gallery-grid img {
     width: 100%;
-    aspect-ratio: 1.5 / 1;
+    aspect-ratio: 1 / 1.5;
     object-fit: cover;
 
     border-radius: 15px;
@@ -586,6 +586,14 @@ body {
     .social-icons a {
         font-size: 35px;
     }
+
+    .gallery {
+        padding: 5px;
+    }
+    
+    .gallery-grid {
+        gap: 5px;
+    }
 }
 
 /* DESKTOP */
@@ -616,6 +624,6 @@ body {
     }
 
     .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
