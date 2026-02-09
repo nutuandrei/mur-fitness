@@ -1,4 +1,4 @@
-// MENU MOBILE
+// ==================== MENU MOBILE ====================
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 
@@ -8,6 +8,7 @@ if (menuBtn && navLinks) {
     });
 }
 
+// ==================== FEATURES ANIMATION ====================
 const features = document.querySelectorAll(".feature");
 
 if (features.length > 0) {
@@ -15,31 +16,27 @@ if (features.length > 0) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
-                observer.unobserve(entry.target); // animăm o singură dată
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
+    features.forEach(feature => observer.observe(feature));
+
+    // Check imediat la load
     features.forEach(feature => {
-        observer.observe(feature);
-
-        // 🔥 CHECK IMEDIAT LA LOAD
         if (feature.getBoundingClientRect().top < window.innerHeight) {
             feature.classList.add("visible");
         }
     });
 }
 
-
+// ==================== CARD SLIDER ====================
 const sliderInner = document.querySelector('.slider-inner');
 const leftArrow = document.querySelector('.arrow-left');
 const rightArrow = document.querySelector('.arrow-right');
-
 let index = 0;
 
-// functie pentru a calcula cate carduri sunt vizibile
 function visibleCards() {
     return window.innerWidth <= 768 ? 1 : 3;
 }
@@ -60,20 +57,9 @@ leftArrow.addEventListener('click', () => {
     updateSlider();
 });
 
-// update la resize
 window.addEventListener('resize', updateSlider);
 
-document.querySelectorAll(".read-more").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const card = btn.closest(".card");
-        card.classList.toggle("expanded");
-
-        btn.textContent = card.classList.contains("expanded")
-            ? "Minimize"
-            : "Read more";
-    });
-});
-
+// Swipe support for slider
 let startX = 0;
 let isDragging = false;
 
@@ -88,80 +74,188 @@ sliderInner.addEventListener('touchend', (e) => {
 
     const endX = e.changedTouches[0].clientX;
     const diff = endX - startX;
-
     const maxIndex = sliderInner.children.length - visibleCards();
 
-    if (diff > 50) { // swipe dreapta → slide anterior
-        if(index > 0) index--;
-        updateSlider();
-    } else if (diff < -50) { // swipe stanga → slide urmator
-        if(index < maxIndex) index++;
-        updateSlider();
-    }
+    if (diff > 50 && index > 0) index--;
+    else if (diff < -50 && index < maxIndex) index++;
+
+    updateSlider();
 });
 
-window.addEventListener("DOMContentLoaded", () => {
-    const track = document.querySelector(".gallery-track");
-    const allImages = Array.from(track.querySelectorAll("img"));
-    track.innerHTML = ""; // golim track-ul
+// ==================== READ MORE ====================
+document.querySelectorAll(".read-more").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        card.classList.toggle("expanded");
 
-    let imagesPerPage;
+        btn.textContent = card.classList.contains("expanded")
+            ? "Minimize"
+            : "Read more";
+    });
+});
 
-    function getImagesPerPage() {
-        if (window.innerWidth < 991) return 6;  // mobil: 3 coloane × 2 rânduri
-        return 8; // desktop: 4 coloane × 2 rânduri
+// ==================== GALLERY SLIDER + LIGHTBOX ====================
+const track = document.querySelector(".gallery-track");
+const allImages = Array.from(track.querySelectorAll("img"));
+const leftGalleryArrow = document.querySelector(".gallery-arrow.left");
+const rightGalleryArrow = document.querySelector(".gallery-arrow.right");
+
+let currentIndexGallery = 0;
+let pages = [];
+let imagesPerPage = 8;
+
+// Lightbox elements
+let lightbox = null;
+let lightboxImg = null;
+let lightboxPrev = null;
+let lightboxNext = null;
+let currentLightboxIndex = 0;
+
+// ==================== FUNCTIONS ====================
+function getImagesPerPage() {
+    return window.innerWidth < 991 ? 6 : 8; // 3x2 mobile, 4x2 desktop
+}
+
+function buildGalleryPages() {
+    const scrollY = window.scrollY;
+    track.innerHTML = "";
+    pages = [];
+    imagesPerPage = getImagesPerPage();
+
+    for (let i = 0; i < allImages.length; i += imagesPerPage) {
+        const page = document.createElement("div");
+        page.classList.add("gallery-page");
+
+        allImages.slice(i, i + imagesPerPage).forEach(img => {
+            page.appendChild(img);
+
+            // Click pe imagine pentru lightbox
+            img.style.cursor = "pointer";
+            img.onclick = () => openLightbox(allImages.indexOf(img));
+        });
+
+        track.appendChild(page);
+        pages.push(page);
     }
 
-    let currentIndex = 0;
-    let pages = [];
+    currentIndexGallery = 0;
+    updateGallerySlider();
+    window.scrollTo(0, scrollY);
+}
 
-    function buildPages() {
-        track.innerHTML = "";
-        pages = [];
-        imagesPerPage = getImagesPerPage();
+function updateGallerySlider() {
+    const offset = -currentIndexGallery * 100;
+    track.style.transform = `translateX(${offset}%)`;
+}
 
-        for (let i = 0; i < allImages.length; i += imagesPerPage) {
-            const page = document.createElement("div");
-            page.classList.add("gallery-page");
+leftGalleryArrow.addEventListener("click", () => {
+    if(currentIndexGallery > 0) currentIndexGallery--;
+    updateGallerySlider();
+});
 
-            allImages.slice(i, i + imagesPerPage).forEach(img => {
-                page.appendChild(img);
-            });
+rightGalleryArrow.addEventListener("click", () => {
+    if(currentIndexGallery < pages.length - 1) currentIndexGallery++;
+    updateGallerySlider();
+});
 
-            track.appendChild(page);
-            pages.push(page);
-        }
+// ==================== LIGHTBOX ====================
+function createLightbox() {
+    lightbox = document.createElement("div");
+    lightbox.id = "lightbox";
+    lightbox.style.cssText = `
+        position: fixed;
+        top:0; left:0; width:100%; height:100%;
+        background: rgba(0,0,0,0.85);
+        display: flex; align-items:center; justify-content:center;
+        z-index:9999;
+    `;
+    lightboxImg = document.createElement("img");
+    lightboxImg.style.maxWidth = "90%";
+    lightboxImg.style.maxHeight = "90%";
+    lightbox.appendChild(lightboxImg);
 
-        currentIndex = 0;
-        updateSlider();
-    }
+    lightboxPrev = document.createElement("button");
+    lightboxPrev.textContent = "❮";
+    lightboxPrev.style.cssText = `
+        position:absolute; top:50%; left:20px; transform:translateY(-50%);
+        font-size:40px; background:none; border:none; color:white; cursor:pointer;
+    `;
+    lightbox.appendChild(lightboxPrev);
 
-    function updateSlider() {
-        const offset = -currentIndex * 100;
-        track.style.transform = `translateX(${offset}%)`;
-    }
+    lightboxNext = document.createElement("button");
+    lightboxNext.textContent = "❯";
+    lightboxNext.style.cssText = `
+        position:absolute; top:50%; right:20px; transform:translateY(-50%);
+        font-size:40px; background:none; border:none; color:white; cursor:pointer;
+    `;
+    lightbox.appendChild(lightboxNext);
 
-    const leftArrow = document.querySelector(".gallery-arrow.left");
-    const rightArrow = document.querySelector(".gallery-arrow.right");
+    document.body.appendChild(lightbox);
 
-    leftArrow.addEventListener("click", () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateSlider();
-        }
+    lightbox.addEventListener("click", (e) => {
+        if(e.target === lightbox) closeLightbox();
     });
 
-    rightArrow.addEventListener("click", () => {
-        if (currentIndex < pages.length - 1) {
-            currentIndex++;
-            updateSlider();
-        }
-    });
+    lightboxPrev.addEventListener("click", prevLightbox);
+    lightboxNext.addEventListener("click", nextLightbox);
 
-    buildPages();
-
-    // Rebuild pages la resize
-    window.addEventListener("resize", () => {
-        buildPages();
+    // Swipe for lightbox
+    let startX = 0;
+    lightbox.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+    lightbox.addEventListener("touchend", e => {
+        const diff = e.changedTouches[0].clientX - startX;
+        if(diff > 50) prevLightbox();
+        else if(diff < -50) nextLightbox();
     });
+}
+
+function openLightbox(index) {
+    currentLightboxIndex = index;
+    if(!lightbox) createLightbox();
+    lightboxImg.src = allImages[currentLightboxIndex].src;
+    lightbox.style.display = "flex";
+}
+
+function closeLightbox() {
+    if(lightbox) lightbox.style.display = "none";
+}
+
+function nextLightbox() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % allImages.length;
+    lightboxImg.src = allImages[currentLightboxIndex].src;
+}
+
+function prevLightbox() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + allImages.length) % allImages.length;
+    lightboxImg.src = allImages[currentLightboxIndex].src;
+}
+
+// ==================== INITIAL BUILD ====================
+buildGalleryPages();
+
+// Rebuild la resize
+window.addEventListener("resize", () => {
+    buildGalleryPages();
+});
+
+// ==================== SWIPE FOR GALLERY ====================
+let galleryStartX = 0;
+let isGalleryDragging = false;
+
+track.addEventListener('touchstart', e => {
+    galleryStartX = e.touches[0].clientX;
+    isGalleryDragging = true;
+});
+
+track.addEventListener('touchend', e => {
+    if (!isGalleryDragging) return;
+    isGalleryDragging = false;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - galleryStartX;
+
+    if(diff > 50 && currentIndexGallery > 0) currentIndexGallery--;
+    else if(diff < -50 && currentIndexGallery < pages.length - 1) currentIndexGallery++;
+
+    updateGallerySlider();
 });

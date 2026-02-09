@@ -461,9 +461,66 @@ body {
 .gallery-arrow.right {
     right: 5px;
 }
+.lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;           /* ascuns inițial */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+    margin: 0 0 20px 0;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.lightbox-close {
+    top: 20px;
+    right: 20px;
+}
+
+.lightbox-prev {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+.lightbox-next {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover,
+.lightbox-close:hover {
+    background: rgba(0,0,0,0.9);
+}
 
 /* MOBILE MENU */
-@media (max-width: 991px) {
+@media (max-width: 991px) 
+{
     .nav-links {
         position: fixed;
         top: 55px; /* de unde începe meniul */
@@ -551,20 +608,20 @@ body {
     }
 
     .navbar-inner {
-        padding: 5px 38px;
+        padding: 5px 12px;
     }
 
     .logo {
-        height: 50px;
+        height: 40px;
     }
 
     .logo-text {
         color: mediumpurple;
-        font-size: 15px;
+        font-size: 13px;
     }
     
     .hero {
-        padding: 10px 5px;
+        padding: 10px 10px;
     }
 
     .hero-inner {
@@ -650,6 +707,15 @@ body {
     .gallery-arrow {
         width: 40px;
         height: 40px;
+    }
+
+    .lightbox-img {
+        max-width: 95%;
+        max-height: 70%;
+    }
+    .lightbox-prev, .lightbox-next {
+        font-size: 25px;
+        padding: 8px;
     }
 }
 
