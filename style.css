@@ -421,7 +421,7 @@ body {
     min-width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, auto);
+    grid-template-rows: repeat(2, 1fr);
     gap: 10px;
 }
 
@@ -639,13 +639,13 @@ body {
     }
 
     .gallery-page {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
+        grid-template-columns: repeat(3, 1fr); /* 3 coloane pe mobil */
+        grid-template-rows: repeat(2, 1fr);    /* 2 rânduri */
     }
 
     .gallery-arrow {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
     }
 }
 

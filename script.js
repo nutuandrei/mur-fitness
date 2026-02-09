@@ -74,30 +74,68 @@ document.querySelectorAll(".read-more").forEach(btn => {
     });
 });
 
+window.addEventListener("DOMContentLoaded", () => {
+    const track = document.querySelector(".gallery-track");
+    const allImages = Array.from(track.querySelectorAll("img"));
+    track.innerHTML = ""; // golim track-ul
 
-const galleryTrack = document.querySelector(".gallery-track");
-const galleryPages = document.querySelectorAll(".gallery-page");
-const galleryPrev = document.querySelector(".gallery-arrow.left");
-const galleryNext = document.querySelector(".gallery-arrow.right");
+    let imagesPerPage;
 
-let galleryIndex = 0;
-
-function updateGallery() {
-    galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
-}
-
-// buton dreapta
-galleryNext.addEventListener("click", () => {
-    if (galleryIndex < galleryPages.length - 1) {
-        galleryIndex++;
-        updateGallery();
+    function getImagesPerPage() {
+        if (window.innerWidth < 991) return 6;  // mobil: 3 coloane × 2 rânduri
+        return 8; // desktop: 4 coloane × 2 rânduri
     }
-});
 
-// buton stanga
-galleryPrev.addEventListener("click", () => {
-    if (galleryIndex > 0) {
-        galleryIndex--;
-        updateGallery();
+    let currentIndex = 0;
+    let pages = [];
+
+    function buildPages() {
+        track.innerHTML = "";
+        pages = [];
+        imagesPerPage = getImagesPerPage();
+
+        for (let i = 0; i < allImages.length; i += imagesPerPage) {
+            const page = document.createElement("div");
+            page.classList.add("gallery-page");
+
+            allImages.slice(i, i + imagesPerPage).forEach(img => {
+                page.appendChild(img);
+            });
+
+            track.appendChild(page);
+            pages.push(page);
+        }
+
+        currentIndex = 0;
+        updateSlider();
     }
+
+    function updateSlider() {
+        const offset = -currentIndex * 100;
+        track.style.transform = `translateX(${offset}%)`;
+    }
+
+    const leftArrow = document.querySelector(".gallery-arrow.left");
+    const rightArrow = document.querySelector(".gallery-arrow.right");
+
+    leftArrow.addEventListener("click", () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlider();
+        }
+    });
+
+    rightArrow.addEventListener("click", () => {
+        if (currentIndex < pages.length - 1) {
+            currentIndex++;
+            updateSlider();
+        }
+    });
+
+    buildPages();
+
+    // Rebuild pages la resize
+    window.addEventListener("resize", () => {
+        buildPages();
+    });
 });
