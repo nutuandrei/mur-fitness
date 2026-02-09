@@ -173,16 +173,24 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.35);
 }
 
-.feature img {
-    padding-top: 10px;
-    width: 170px;
-    height: 170px;
+.feature-header {
+    display: flex;
+    align-items: center;   /* aliniere verticală */
+    justify-content: center; /* centru pe orizontală */
+    gap: 15px;             /* spațiu între poză și text */
+    margin-bottom: 15px;
 }
 
-.feature h1 {
-    font-size: 30px;
-    padding-bottom: 20px;
+.feature-header img {
+    width: 150px;   /* mai mic decât înainte, arată mai bine */
+    height: 150px;
 }
+
+.feature-header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
 .feature p {
     font-size: 20px;
 }
@@ -631,6 +639,7 @@ body {
     }
 
     .gallery-page {
+        grid-template-columns: repeat(3, 1fr);
         gap: 5px;
     }
 
