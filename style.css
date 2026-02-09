@@ -218,29 +218,6 @@ body {
     color: mediumpurple;
 }
 
-.gallery-grid {
-    padding-top: 10px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* MOBILE DEFAULT */
-    gap: 10px;
-}
-
-.gallery-grid img {
-    width: 100%;
-    aspect-ratio: 1 / 1.5;
-    object-fit: cover;
-
-    border-radius: 15px;
-    display: block;
-}
-
-.gallery-grid div {
-    background: orange;
-    border-radius: 15px;
-    display: block;
-    font-size: 18px;
-    font-weight: normal;
-}
 .slider-container {
     position: relative;
     width: 100%;
@@ -415,6 +392,68 @@ body {
     opacity: 0.8;
 }
 
+
+.gallery-slider-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.gallery-slider {
+    overflow: hidden;
+}
+
+.gallery-track {
+    display: flex;
+    transition: transform 0.4s ease;
+}
+
+.gallery-page {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+}
+
+.gallery-page img {
+    width: 100%;
+    aspect-ratio: 1 / 1.4;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* săgeți */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-arrow.left {
+    left: 5px;
+}
+
+.gallery-arrow.right {
+    right: 5px;
+}
+
 /* MOBILE MENU */
 @media (max-width: 991px) {
     .nav-links {
@@ -587,12 +626,17 @@ body {
         font-size: 35px;
     }
 
-    .gallery {
-        padding: 5px;
+    .gallery-slider-container {
+        padding: 0 5px;
     }
-    
-    .gallery-grid {
+
+    .gallery-page {
         gap: 5px;
+    }
+
+    .gallery-arrow {
+        width: 32px;
+        height: 32px;
     }
 }
 
@@ -621,9 +665,5 @@ body {
 
     .feature {
         /*width: 1400px;*/
-    }
-
-    .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
     }
 }

@@ -73,3 +73,31 @@ document.querySelectorAll(".read-more").forEach(btn => {
             : "Read more";
     });
 });
+
+
+const galleryTrack = document.querySelector(".gallery-track");
+const galleryPages = document.querySelectorAll(".gallery-page");
+const galleryPrev = document.querySelector(".gallery-arrow.left");
+const galleryNext = document.querySelector(".gallery-arrow.right");
+
+let galleryIndex = 0;
+
+function updateGallery() {
+    galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+}
+
+// buton dreapta
+galleryNext.addEventListener("click", () => {
+    if (galleryIndex < galleryPages.length - 1) {
+        galleryIndex++;
+        updateGallery();
+    }
+});
+
+// buton stanga
+galleryPrev.addEventListener("click", () => {
+    if (galleryIndex > 0) {
+        galleryIndex--;
+        updateGallery();
+    }
+});
