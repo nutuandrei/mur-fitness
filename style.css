@@ -68,9 +68,10 @@ body {
 
 /* HAMBURGER */
 .menu {
-    font-size: 28px;
+    font-size: 22px;
     cursor: pointer;
     color: mediumpurple;
+    padding-right: 10px;
 }
 
 /* HERO wrapper (full width, FĂRĂ background) */
